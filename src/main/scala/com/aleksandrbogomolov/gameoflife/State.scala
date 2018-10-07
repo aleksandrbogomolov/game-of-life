@@ -11,8 +11,3 @@ case class Dead() extends State {
 
   override def toString: String = "dead"
 }
-
-case class Empty() extends State {
-
-  override def toString: String = "empty"
-}
