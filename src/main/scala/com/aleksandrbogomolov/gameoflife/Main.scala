@@ -1,5 +1,7 @@
 package com.aleksandrbogomolov.gameoflife
 
+import com.aleksandrbogomolov.gameoflife.model.{Alive, Cell, Universe}
+
 object Main extends App {
 
   val width = 10

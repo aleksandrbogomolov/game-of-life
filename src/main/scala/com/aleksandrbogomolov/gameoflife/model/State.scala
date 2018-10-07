@@ -1,4 +1,4 @@
-package com.aleksandrbogomolov.gameoflife
+package com.aleksandrbogomolov.gameoflife.model
 
 sealed trait State {}
 

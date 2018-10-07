@@ -1,4 +1,4 @@
-package com.aleksandrbogomolov.gameoflife
+package com.aleksandrbogomolov.gameoflife.model
 
 class Universe(width: Int, height: Int) {
 

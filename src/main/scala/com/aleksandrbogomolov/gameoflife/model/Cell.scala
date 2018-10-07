@@ -1,4 +1,4 @@
-package com.aleksandrbogomolov.gameoflife
+package com.aleksandrbogomolov.gameoflife.model
 
 class Cell(x: Int, y: Int, state: State) {
 
