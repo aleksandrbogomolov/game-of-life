@@ -33,8 +33,8 @@ case class Universe(width: Int, height: Int) {
   def wrongPopulation(neighborsCount: Int): Boolean = neighborsCount < 2 || neighborsCount > 3
 
   def changeState(cell: Cell): Cell = cell.state match {
-    case Alive() => Cell(cell.x, cell.y, Dead())
-    case Dead() => Cell(cell.x, cell.y, Alive())
+    case Alive() => cell.copy(state = Dead())
+    case Dead() => cell.copy(state = Alive())
   }
 
   def xOutOfRange(x: Int): Boolean = x < 0 || x >= width
