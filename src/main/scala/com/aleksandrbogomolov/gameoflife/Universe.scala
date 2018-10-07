@@ -12,3 +12,8 @@ class Universe(width: Int, height: Int) {
     if (j == width - 1) println()
   }
 }
+
+object Universe {
+
+  def apply(width: Int, height: Int): Universe = new Universe(width, height)
+}
