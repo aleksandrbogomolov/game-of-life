@@ -1,11 +1,10 @@
 package com.aleksandrbogomolov.gameoflife.model
 
-class Cell(x: Int, y: Int, state: State) {
+case class Cell(x: Int, y: Int, state: State) {
 
-  override def toString: String = s"x=$x y=$y state=$state"
-}
+  def isAlive: Boolean = state.isInstanceOf[Alive]
 
-object Cell {
+  def isDead: Boolean = state.isInstanceOf[Dead]
 
-  def apply(x: Int, y: Int, state: State): Cell = new Cell(x, y, state)
+  override def toString: String = state.toString
 }
