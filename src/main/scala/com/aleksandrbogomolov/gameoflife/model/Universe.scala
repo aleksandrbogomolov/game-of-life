@@ -16,25 +16,8 @@ case class Universe(width: Int, height: Int) {
     }
   }
 
-  def nextStep(): Unit = {
-    for {
-      i <- 0 until width
-      j <- 0 until height
-    } yield {
-      val cell = structure(i)(j)
-      val neighborsCount = calcNeighbors(cell)
-      if (neighborsCount == 3 && cell.isDead) structure(i)(j) = changeState(cell)
-      else if (wrongPopulation(neighborsCount) && cell.isAlive) structure(i)(j) = changeState(cell)
-    }
-  }
-
-  def calcNeighbors(cell: Cell): Int = ???
-
-  def wrongPopulation(neighborsCount: Int): Boolean = neighborsCount < 2 || neighborsCount > 3
-
-  def changeState(cell: Cell): Cell = cell.state match {
-    case Alive() => cell.copy(state = Dead())
-    case Dead() => cell.copy(state = Alive())
+  def calcNeighbors(cell: Cell): Int = {
+    ???
   }
 
   def xOutOfRange(x: Int): Boolean = x < 0 || x >= width
