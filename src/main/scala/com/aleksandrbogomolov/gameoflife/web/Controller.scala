@@ -15,8 +15,15 @@ object Controller {
     implicit val executionContext: ExecutionContextExecutor = system.dispatcher
 
     val routes = {
-      pathSingleSlash {
-        getFromResource("index.html")
+      pathPrefix("game") {
+        concat(
+          pathEnd {
+            getFromResource("index.html")
+          },
+          path(Segment) {
+            ???
+          }
+        )
       }
     }
 
