@@ -1,8 +1,9 @@
 package com.aleksandrbogomolov.gameoflife.game
 
 import com.aleksandrbogomolov.gameoflife.model.{Alive, Cell, Dead, Universe}
+import com.typesafe.scalalogging.LazyLogging
 
-object Processor {
+object Processor extends LazyLogging {
 
   def nextStep(uni: Universe): Universe = {
     val newUni = Universe(uni.width, uni.height)
