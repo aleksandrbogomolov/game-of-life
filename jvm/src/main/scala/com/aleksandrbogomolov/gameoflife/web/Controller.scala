@@ -19,9 +19,6 @@ object Controller {
         concat(
           pathEnd {
             getFromResource("index.html")
-          },
-          path(Segment) {
-            ???
           }
         )
       }
