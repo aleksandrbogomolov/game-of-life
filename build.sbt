@@ -1,32 +1,36 @@
-import sbtcrossproject.CrossPlugin.autoImport.{CrossType, crossProject, _}
-import scalajscrossproject.ScalaJSCrossPlugin.autoImport._
+import sbtcrossproject.CrossPlugin.autoImport.crossProject
+import sbtcrossproject.CrossType
 
-val projectVersion = "0.0.1"
+lazy val frontEnd = (project in file("front-end"))
+  .enablePlugins(ScalaJSPlugin)
+  .settings(
+    scalaVersion := "2.12.6",
+    scalaJSUseMainModuleInitializer := true,
+    libraryDependencies ++= Seq(
+      "org.scala-js" %%% "scalajs-dom" % "0.9.6",
+      "com.typesafe.play" %%% "play-json" % "2.6.0",
+    )
+  ) dependsOn sharedJS
 
-val sharedSettings = Seq(
-  name := "game-of-life",
-  scalaVersion := "2.12.6"
-)
+lazy val backEnd = (project in file("back-end"))
+  .settings(
+    resolvers += Resolver.bintrayRepo("hseeberger", "maven"),
+    libraryDependencies ++= Seq(
+      "com.typesafe.akka" %% "akka-actor" % "2.5.17",
+      "com.typesafe.akka" %% "akka-http" % "10.1.5",
+      "de.heikoseeberger" %% "akka-http-circe" % "1.20.0",
+      "de.heikoseeberger" %% "akka-http-play-json" % "1.20.0",
+      "com.typesafe.akka" %% "akka-slf4j" % "2.5.17"
+    )
+  ) dependsOn sharedJVM
 
-lazy val game = crossProject(JSPlatform, JVMPlatform)
-  .crossType(CrossType.Dummy)
-  .in(file("."))
-  .settings(sharedSettings)
-  .jsSettings(libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.6")
-  .jvmSettings(libraryDependencies ++= jvmDependencies)
+lazy val shared = crossProject(JSPlatform, JVMPlatform)
+  .crossType(CrossType.Pure)
+  .settings(
+    libraryDependencies ++= Seq(
+      "com.typesafe.play" %% "play-json" % "2.6.0",
+    )
+  )
 
-lazy val gameJS = game.js
-lazy val gameJVM = game.jvm
-
-/** Dependencies only used by the JVM project */
-lazy val jvmDependencies = Seq(
-  "com.typesafe.scala-logging" %% "scala-logging" % "3.9.0",
-  "com.typesafe.akka" %% "akka-http" % "10.1.5",
-  "com.typesafe.akka" %% "akka-actor" % "2.5.17",
-  "com.typesafe.akka" %% "akka-stream" % "2.5.17"
-)
-
-/** Dependencies only used by the JS project (note the use of %%% instead of %%) */
-// lazy val jsDependencies = Seq(
-  // "org.scala-js" %%% "scalajs-dom" % "0.9.6"
-// )
+lazy val sharedJVM = shared.jvm
+lazy val sharedJS = shared.js
