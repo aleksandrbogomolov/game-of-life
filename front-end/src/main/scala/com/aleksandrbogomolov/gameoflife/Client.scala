@@ -29,7 +29,7 @@ object Client extends JsonSupport {
   def displayTitle(title: String): Unit = dom.document.getElementById("titles")
     .insertAdjacentHTML("beforeend", s"<li>$title</li>")
 
-  def getData: Future[Seq[Series]] = Ajax.get("http://localhost:3000/api/start")
+  def getData: Future[Seq[Series]] = Ajax.get("http://localhost:3000/game")
     .map(_.responseText)
     .map(Json.parse)
     .map(_.as[Seq[Series]])
