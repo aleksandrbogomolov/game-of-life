@@ -1,6 +1,6 @@
 package com.aleksandrbogomolov.gameoflife.game
 
-import com.aleksandrbogomolov.gameoflife.model.{Alive, Cell, Dead, Universe}
+import com.aleksandrbogomolov.gameoflife.shared.model.{Alive, Cell, Dead, Universe}
 
 object Processor {
 

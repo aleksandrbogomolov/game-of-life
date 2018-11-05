@@ -1,9 +1,11 @@
 package com.aleksandrbogomolov.gameoflife
 
-import com.aleksandrbogomolov.gameoflife.shared.{JsonSupport, Series}
+import com.aleksandrbogomolov.gameoflife.shared.JsonSupport
+import com.aleksandrbogomolov.gameoflife.shared.model.{Cell, Universe}
 import org.scalajs.dom
-import org.scalajs.dom.Event
 import org.scalajs.dom.ext.Ajax
+import org.scalajs.dom.raw.Node
+import org.scalajs.dom.{Event, document}
 import play.api.libs.json.Json
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -18,19 +20,39 @@ object Client extends JsonSupport {
 
   def initApplication(e: Event): Unit = {
     println("initialising application…")
-    displayTitle("The Americans")
-    displayTitle("Vinyl")
-    getData.onComplete {
-      case Success(v) => v.foreach(s => displayTitle(s.title))
+    getField.onComplete {
+      case Success(v) => drawField(v.structure)
       case Failure(ex) => println(s"oops: $ex")
     }
   }
 
-  def displayTitle(title: String): Unit = dom.document.getElementById("titles")
-    .insertAdjacentHTML("beforeend", s"<li>$title</li>")
-
-  def getData: Future[Seq[Series]] = Ajax.get("http://localhost:3000/game")
+  def getField: Future[Universe] = Ajax.get("http://localhost:3000/game")
     .map(_.responseText)
     .map(Json.parse)
-    .map(_.as[Seq[Series]])
+    .map(_.as[Universe])
+
+  def drawField(structure: Array[Array[Cell]]): Unit = {
+    val field = document.getElementById("main")
+    val table = document.createElement("table")
+    table.setAttribute("id", "table")
+    val tBody = document.createElement("tbody")
+    for {
+      array <- structure
+    } yield {
+      tBody.appendChild(generateTableRow(array))
+    }
+    table.appendChild(tBody)
+    field.appendChild(table)
+  }
+
+  def generateTableRow(array: Array[Cell]): Node = {
+    val row = document.createElement("tr")
+    for (i <- array) {
+      val cell = document.createElement("td")
+      cell.setAttribute("class", "cell")
+      cell.appendChild(document.createTextNode(i.toString))
+      row.appendChild(cell)
+    }
+    row
+  }
 }

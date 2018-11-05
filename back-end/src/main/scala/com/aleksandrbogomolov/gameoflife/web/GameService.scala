@@ -2,7 +2,8 @@ package com.aleksandrbogomolov.gameoflife.web
 
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import com.aleksandrbogomolov.gameoflife.shared.{JsonSupport, Series}
+import com.aleksandrbogomolov.gameoflife.shared.JsonSupport
+import com.aleksandrbogomolov.gameoflife.shared.model.Universe
 import de.heikoseeberger.akkahttpplayjson.PlayJsonSupport
 
 trait GameService extends JsonSupport with PlayJsonSupport {
@@ -13,7 +14,7 @@ trait GameService extends JsonSupport with PlayJsonSupport {
         pathEndOrSingleSlash {
           concat(
             get {
-              complete(Seq(Series("8219", "Sense8"), Series("9214", "Better Call Saul")))
+              complete(Universe(50, 50))
             },
             post {
               // submit start cells
