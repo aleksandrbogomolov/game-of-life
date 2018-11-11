@@ -50,6 +50,7 @@ object Client extends JsonSupport {
     for (i <- array) {
       val cell = document.createElement("td")
       cell.setAttribute("class", "cell")
+      cell.setAttribute("id", i.id)
       cell.appendChild(document.createTextNode(i.toString))
       row.appendChild(cell)
     }
