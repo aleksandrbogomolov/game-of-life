@@ -4,12 +4,13 @@ import com.aleksandrbogomolov.gameoflife.shared.JsonSupport
 import com.aleksandrbogomolov.gameoflife.shared.model.{Cell, Universe}
 import org.scalajs.dom
 import org.scalajs.dom.ext.Ajax
-import org.scalajs.dom.raw.Node
+import org.scalajs.dom.raw.{Element, Node}
 import org.scalajs.dom.{Event, document}
 import play.api.libs.json.Json
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.scalajs.js.annotation.JSExportTopLevel
 import scala.util.{Failure, Success}
 
 object Client extends JsonSupport {
@@ -51,9 +52,16 @@ object Client extends JsonSupport {
       val cell = document.createElement("td")
       cell.setAttribute("class", "cell")
       cell.setAttribute("id", i.id)
+      cell.setAttribute("onclick", "selectCell(this)")
       cell.appendChild(document.createTextNode(i.toString))
       row.appendChild(cell)
     }
     row
+  }
+
+  @JSExportTopLevel("selectCell")
+  def selectCell(element: Element): Unit = {
+    val classList = element.classList
+    if (classList.contains("black")) classList.remove("black") else classList.add("black")
   }
 }
