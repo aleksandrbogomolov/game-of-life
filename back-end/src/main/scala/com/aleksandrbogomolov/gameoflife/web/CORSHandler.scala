@@ -11,8 +11,7 @@ trait CORSHandler {
   private val corsResponseHeaders = List(
     `Access-Control-Allow-Origin`.*,
     `Access-Control-Allow-Credentials`(true),
-    `Access-Control-Allow-Headers`("Authorization",
-      "Content-Type", "X-Requested-With")
+    `Access-Control-Allow-Headers`("Authorization", "Content-Type", "X-Requested-With")
   )
 
   //this directive adds access control headers to normal responses
@@ -23,7 +22,7 @@ trait CORSHandler {
     complete(HttpResponse(StatusCodes.OK).withHeaders(`Access-Control-Allow-Methods`(OPTIONS, POST, PUT, GET, DELETE)))
   }
 
-  def corsHandler(r: Route): Route = addAccessControlHeaders() {
-    preflightRequestHandler ~ r
+  def corsHandler(route: Route): Route = addAccessControlHeaders() {
+    preflightRequestHandler ~ route
   }
 }
