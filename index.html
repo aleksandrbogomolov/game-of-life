@@ -1,15 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Game of Life</title>
+    <script src="front-end/target/scala-2.12/frontend-jsdeps.js"></script>
     <script src="front-end/target/scala-2.12/frontend-fastopt.js"></script>
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
-<body>
-<section>
-    <h1 id="title">Game of Life</h1>
-</section>
-<div id="main"></div>
+<p>
+    <section>
+        <h1 id="title">Game of Life</h1>
+    </section>
+    <div id="main">
+<p>
+    <button id="start" type="submit" onclick="updateField()">Start</button>
+</p>
+</div>
 </body>
 </html>

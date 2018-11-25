@@ -30,3 +30,9 @@
 .cell.black {
     background-color: black;
 }
+
+#start {
+    text-align:center;
+    display: inline-block;
+    float: right;
+}

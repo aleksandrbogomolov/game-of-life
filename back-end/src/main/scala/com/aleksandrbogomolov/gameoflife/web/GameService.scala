@@ -1,5 +1,6 @@
 package com.aleksandrbogomolov.gameoflife.web
 
+import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import com.aleksandrbogomolov.gameoflife.shared.JsonSupport
@@ -17,8 +18,10 @@ trait GameService extends JsonSupport with PlayJsonSupport {
               complete(Universe(50, 50))
             },
             post {
-              // submit start cells
-              ???
+              entity(as[Universe]) { universe =>
+                universe.printStructure()
+                complete(StatusCodes.OK)
+              }
             }
           )
         },

@@ -9,7 +9,9 @@ lazy val frontEnd = (project in file("front-end"))
     libraryDependencies ++= Seq(
       "org.scala-js" %%% "scalajs-dom" % "0.9.6",
       "com.typesafe.play" %%% "play-json" % "2.6.0",
-    )
+      "org.querki" %%% "jquery-facade" % "1.2"
+    ),
+    jsDependencies += "org.webjars" % "jquery" % "2.2.1" / "jquery.js" minified "jquery.min.js"
   ) dependsOn sharedJS
 
 lazy val backEnd = (project in file("back-end"))

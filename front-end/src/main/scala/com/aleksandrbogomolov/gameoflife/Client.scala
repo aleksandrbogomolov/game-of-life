@@ -2,8 +2,10 @@ package com.aleksandrbogomolov.gameoflife
 
 import com.aleksandrbogomolov.gameoflife.shared.JsonSupport
 import com.aleksandrbogomolov.gameoflife.shared.model.{Cell, Universe}
+import org.querki.jquery._
 import org.scalajs.dom
 import org.scalajs.dom.ext.Ajax
+import org.scalajs.dom.ext.Ajax.InputData
 import org.scalajs.dom.raw.{Element, Node}
 import org.scalajs.dom.{Event, document}
 import play.api.libs.json.Json
@@ -63,5 +65,24 @@ object Client extends JsonSupport {
   def selectCell(element: Element): Unit = {
     val classList = element.classList
     if (classList.contains("black")) classList.remove("black") else classList.add("black")
+  }
+
+  @JSExportTopLevel("updateField")
+  def updateField(): Unit = {
+    val td = $("#table tr td")
+    val x = $("#table tr").length
+    val y = td.length / x
+    val result = Universe(x, y)
+    td.filter(c => c.classList.contains("black")).foreach(c => result.setCell(c.id))
+    val headers = Map("Content-Type" -> "application/json", "X-Requested-With" -> "XMLHttpRequest")
+    val json = Json.toJson(result).toString()
+    println(json)
+    Ajax.post("http://localhost:3000/game",
+      InputData.str2ajax(json),
+      0,
+      headers,
+      withCredentials = false,
+      ""
+    )
   }
 }
